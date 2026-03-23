@@ -3,12 +3,21 @@
 # ============================================
 
 output "cloudwatch_log_groups" {
-  description = "Nombres de los grupos de logs"
+  description = "Mapa de nombres de los grupos de logs"
   value = {
     ecs      = aws_cloudwatch_log_group.ecs.name
     lambda   = aws_cloudwatch_log_group.lambda.name
     vpc_flow = aws_cloudwatch_log_group.vpc_flow.name
   }
+}
+
+output "cloudwatch_log_group_names" {
+  description = "Lista de nombres de los grupos de logs"
+  value = [
+    aws_cloudwatch_log_group.ecs.name,
+    aws_cloudwatch_log_group.lambda.name,
+    aws_cloudwatch_log_group.vpc_flow.name
+  ]
 }
 
 output "cloudwatch_dashboards" {

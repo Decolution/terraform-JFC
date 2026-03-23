@@ -56,3 +56,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "acm_certificate_arn" {
+  description = ""
+  type        = string
+  default     = ""
+}

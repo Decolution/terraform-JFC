@@ -158,7 +158,7 @@ resource "aws_lb_listener" "https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = data.aws_acm_certificate.main.arn
+  certificate_arn   = local.certificate_arn # ← usar el local que definimos
 
   default_action {
     type = "fixed-response"
@@ -251,10 +251,36 @@ resource "aws_lb_listener_rule" "users" {
   }
 }
 
-# Data source para ACM certificate
-data "aws_acm_certificate" "main" {
+# ============================================
+# ACM CERTIFICATE
+# ============================================
+# Si no se proporciona un ARN, crear un nuevo certificado
+resource "aws_acm_certificate" "main" {
+  count = var.acm_certificate_arn == "" ? 1 : 0
+
+  domain_name       = "*.${var.project_name}.com"
+  validation_method = "DNS"
+
+  tags = merge(var.tags, {
+    Name = "${var.project_name}-${var.environment}-cert"
+  })
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# Data source para usar certificado existente
+data "aws_acm_certificate" "existing" {
+  count = var.acm_certificate_arn != "" ? 1 : 0
+
   domain   = "*.${var.project_name}.com"
   statuses = ["ISSUED"]
+}
+
+# Local para obtener el ARN correcto
+locals {
+  certificate_arn = var.acm_certificate_arn != "" ? var.acm_certificate_arn : try(aws_acm_certificate.main[0].arn, "")
 }
 
 # ============================================

@@ -22,6 +22,17 @@ output "frontend_website_endpoint" {
   value       = aws_s3_bucket_website_configuration.frontend.website_endpoint
 }
 
+# AGREGAR ESTOS OUTPUTS:
+output "frontend_bucket_name" {
+  description = "Nombre del bucket S3 para frontend"
+  value       = aws_s3_bucket.frontend.id
+}
+
+output "media_bucket_name" {
+  description = "Nombre del bucket S3 para media"
+  value       = aws_s3_bucket.media.id
+}
+
 output "media_bucket_id" {
   description = "ID del bucket S3 para media"
   value       = aws_s3_bucket.media.id

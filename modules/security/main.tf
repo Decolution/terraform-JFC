@@ -245,9 +245,9 @@ resource "aws_cognito_user_pool_client" "main" {
     "ALLOW_REFRESH_TOKEN_AUTH"
   ]
 
-  access_token_validity  = 60
-  id_token_validity      = 60
-  refresh_token_validity = 30
+  access_token_validity  = 1   # 1 hora
+  id_token_validity      = 1   # 1 hora
+  refresh_token_validity = 720 # 720 horas = 30 días
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
