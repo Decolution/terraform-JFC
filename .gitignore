@@ -1,0 +1,26 @@
+# AWS CLI credentials
+.aws/
+**/.aws/
+.aws/credentials
+aws/credentials
+credentials
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+.terraform/
+*.terraform.lock.hcl
+
+# Sensitive files
+*.pem
+*.key
+*.crt
+.env
+.env.*
+secrets*
